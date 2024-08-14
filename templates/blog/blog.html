@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+        <section class="breadcrumb_area">
+            <img class="breadcrumb_shap" src={% static "img/banner_bg.png"  %}alt="">
+            <div class="container">
+                <div class="breadcrumb_content text-center">
+                    <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">Blog List</h1>
+                    <p class="f_400 w_color f_size_16 l_height26">Why I say old chap that is spiffing off his nut arse
+                        pear shaped plastered<br> Jeffrey bodge barney some dodgy.!!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="blog_area sec_pad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        {% for post in posts  %}
+                            <div class="blog_list_item mb_50">
+                                <img class="img-fluid" src="{{ post.image.url }}" alt="">
+                                <div class="blog_content">
+                                    <div class="post_date">
+                                        <h2>{{post.posted_at|date:'d'}} <span>{{post.posted_at|date:'F'}}</span></h2>
+                                    </div>
+                                    <div class="entry_post_info">
+                                        By: <a href="">{{ post.user }}</a>
+                                        <a href="">2 Comments</a>
+                                        <a href="">{{post.tags}}</a>
+                                    </div>
+                                    <a href="/Postpage/{{ post.title }}">
+                                        <h5 class="f_p f_size_20 f_500 t_color mb_20">{{ post.tags }}.</h5>
+                                    </a>
+                                    <p class="f_400 mb_20">{{ post.description|safe|truncatewords:"50"|linebreaks }}.</p>
+                                    <a href="/Postpage/{{ post.title }}" class="learn_btn_two">Read More <i class="ti-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+
+
+
+
+
+
+                        {% comment %} <ul class="list-unstyled page-numbers shop_page_number text-left mt_30">
+                            <li><span aria-current="page" class="page-numbers current">1</span></li>
+                            <li><a class="page-numbers" href="http://droitthemes.com/html/saasland/blog-list.html#">2</a></li>
+                            <li><a class="next page-numbers" href="http://droitthemes.com/html/saasland/blog-list.html#"><i class="ti-arrow-right"></i></a></li>
+                        </ul> {% endcomment %}
+
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                        
+                                {% if posts.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                                <li class="page-item"><a class="page-link" href="?page={{ posts.previous_page_number }}">previous</a></li>
+                                {% endif %}
+                        
+                                <span class="current">
+                                    <li class="page-item disabled"><a class="page-link">Page {{ posts.number }} of {{ posts.paginator.num_pages }}.</a></li>
+                                </span>
+                        
+                                {% if posts.has_next %}
+                                     <li class="page-item"><a class="page-link" href="?page={{ posts.next_page_number }}">next</a></li>
+                                     <li class="page-item"><a class="page-link" href="?page={{ posts.paginator.num_pages }}">last &raquo;</a></li>
+                                {% endif %}
+                           
+                    </ul>
+                </nav>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog-sidebar">
+                            <div class="widget sidebar_widget widget_search">
+                                <form action="{% url "search_view" %}" class="search-form input-group" method='get'>
+                                    <input type="search" class="form-control widget_input" placeholder="Search" name='keyword'>
+                                    <button type="submit"><i class="ti-search"></i></button>
+                                </form>
+                            </div>
+                            <div class="widget sidebar_widget widget_recent_post mt_60">
+                                <div class="widget_title">
+                                    <h3 class="f_p f_size_20 t_color3">Recent posts</h3>
+                                    <div class="border_bottom"></div>
+                                </div>
+
+                                {% for post in posts %}
+                                <div class="media post_item">
+                                    <a href="/Postpage/{{ post.title }}"><img src="{{post.image.url}}" width='100'height='100'><a/>
+                                    <div class="media-body">
+                                        <a href="/Postpage/{{ post.title }}">
+                                            <h3 class="f_size_16 f_p f_400">{{post.title}}.</h3>
+                                        </a>
+                                        <div class="entry_post_info">
+                                            By: <a href="/Postpage/{{ post.title }}">{{post.user}}</a>
+                                            <a href="/Postpage/{{ post.title }}">{{post.posted_at}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                            <div class="widget sidebar_widget widget_categorie mt_60">
+                                <div class="widget_title">
+                                    <h3 class="f_p f_size_20 t_color3">Categories</h3>
+                                    <div class="border_bottom"></div>
+                                </div>
+                                {% for category in categories  %}
+                                <ul class="list-unstyled">
+                                    <li> <a href="{% url "get_category" category.name %}"><span>{{ category.name|safe }}</span><em></em></a> </li>
+                                </ul>
+                                {% endfor %}
+                            </div>
+                            <div class="widget sidebar_widget widget_tag_cloud mt_60">
+                                <div class="widget_title">
+                                    <h3 class="f_p f_size_20 t_color3">Tags</h3>
+                                    <div class="border_bottom"></div>
+                                </div>
+                                {% for tag in posts  %}
+                                <div class="post-tags">
+                                    <a href="/Postpage/{{ tag.title }}">{{tag.tags}}</a>
+                                </div>
+                               {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+{% endblock content %}

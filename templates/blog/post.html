@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block content %}
+        <section class="breadcrumb_area">
+            <img class="breadcrumb_shap" src="img/banner_bg.png" alt="">
+            <div class="container">
+                <div class="breadcrumb_content text-center">
+                    <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">Blog List</h1>
+                    <p class="f_400 w_color f_size_16 l_height26">Why I say old chap that is spiffing off his nut arse
+                        pear shaped plastered<br> Jeffrey bodge barney some dodgy.!!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="blog_area sec_pad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="blog_list_item mb_50">
+                            <img class="img-fluid" src="{{post.image.url}}" alt="">
+                            <div class="blog_content">
+                                <div class="post_date">
+                                    <h2>{{post.posted_at|date:'d'}} <span>{{post.posted_at|date:'F'}}</span></h2>
+                                </div>
+                                <div class="entry_post_info">
+                                    By: <a href="">{{ post.user }}</a>
+                                    #<a href="">2 Comments</a>
+                                    <a href="">{{ post.tags }}</a>
+                                </div>
+                                <a href="">
+                                    <h5 class="f_p f_size_20 f_500 t_color mb_20">{{ post.tags }}.</h5>
+                                </a>
+                                <p class="f_400 mb_20">{{ post.description| safe }}.</p>                       
+                            </div>
+                        </div>
+
+                        
+                        <!-- End Recent Posts -->
+                    <div class="blog_post">
+                        <div class="widget_title">
+                            <h3 class="f_p f_size_20 t_color3">Related Post</h3>
+                            <div class="border_bottom"></div>
+                        </div>
+                        <div class="row">
+                            {% for post in related %}
+                            <div class="col-lg-4 col-sm-6">
+                                <div class="blog_post_item">
+                                    <div class="blog_img">
+                                        <img src="{{post.image.url}}" alt="">
+                                    </div>
+                                    <div class="blog_content">
+                                        <div class="entry_post_info">
+                                            <a href="">{{post.posted_at}}</a>
+                                        </div>
+                                        <a href="/Postpage/{{ post.title }}">
+                                            <h5 class="f_p f_size_16 f_500 t_color">{{post.title}}</h5>
+                                        </a>
+                                        <p class="f_400 mb-0">{{ post.description|safe|truncatewords:"5"|linebreaks }}...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                        <!-- End Recent Posts -->
+
+                        <!-- Comment -->
+
+                        <div class="widget_title mt_100">
+                            <h3 class="f_p f_size_20 t_color3">2 Comment</h3>
+                            <div class="border_bottom"></div>
+                        </div>
+                            <ul class="comment-box list-unstyled mb-0">
+                                {% for comment in comments %}
+                                <li class="post_comment">
+                                    <div class="media post_author mt_60">
+                                        <div class="media-left">
+                                            <img class="rounded-circle" src="./single_post_files/comment1.png" alt="">
+                                            <a href="" class="replay"><i class="ti-share"></i></a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="f_p t_color3 f_size_18 f_500">{{comment.name|safe}}</h5>
+                                            <h6 class="f_p f_size_15 f_400 mb_20">{{ comment.commented_at }}</h6>
+                                            <p>{{comment.comment}}!</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        <div class="widget_title mt_100">
+                            <h3 class="f_p f_size_20 t_color3">Leave a Comment</h3>
+                            <div class="border_bottom"></div>
+                        </div>
+
+                        <form class="get_quote_form row" action="{% url "post_comment" %}" method="POST">{% csrf_token %}
+                            <div class="col-md-12 form-group">
+                                <textarea class="form-control message" placeholder="Comment" name='comment'></textarea>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="text" class="form-control" id="name" placeholder="Name" name='name'>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="email" class="form-control" id="email" placeholder="Email" name='email'>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="website" placeholder="Website (optional)" name='website'>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="hidden" class="form-control" value="{{post.id}}" placeholder="Website (optional)" name='id'>
+                            </div>
+                            <div class="col-md-12"><button class="btn btn_three btn_hover f_size_15 f_500" type="submit">Post Comment</button></div>
+                        </form>
+                        
+
+                        <!-- <ul class="list-unstyled page-numbers shop_page_number text-left mt_30">
+                            <li><span aria-current="page" class="page-numbers current">1</span></li>
+                            <li><a class="page-numbers" href="http://droitthemes.com/html/saasland/blog-list.html#">2</a></li>
+                            <li><a class="next page-numbers" href="http://droitthemes.com/html/saasland/blog-list.html#"><i class="ti-arrow-right"></i></a></li>
+                        </ul> -->
+                    </div>
+
+                    
+
+                        <!-- SideBar -->
+
+                    <div class="col-lg-4">
+                        <div class="blog-sidebar">
+                            <div class="widget sidebar_widget widget_search">
+                                <form action="{% url "search_view" %}" class="search-form input-group" method='get'>
+                                    <input type="search" class="form-control widget_input" placeholder="Search" name='keyword'>
+                                    <button type="submit"><i class="ti-search"></i></button>
+                                </form>
+                            </div>
+                            <div class="widget sidebar_widget widget_recent_post mt_60">
+                                <div class="widget_title">
+                                    <h3 class="f_p f_size_20 t_color3">Recent posts</h3>
+                                    <div class="border_bottom"></div>
+                                </div>
+                                {% for post in recent %}
+                                <div class="media post_item">
+                                    <a href="/Postpage/{{ post.title }}"><img src="{{post.image.url}}" width='100'height='100'></a>
+                                    <div class="media-body">
+                                        <a href="/Postpage/{{ post.title }}"><h3 class="">{{post.title}}</h3></a>
+                                        <div class="entry_post_info">
+                                            By: <a href="">{{post.user}}</a>
+                                            <a href="">{{post.posted_at}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                
+                                
+
+
+                            </div>
+                            <div class="widget sidebar_widget widget_categorie mt_60">
+                                <div class="widget_title">
+                                    <h3 class="f_p f_size_20 t_color3">Categories</h3>
+                                    <div class="border_bottom"></div>
+                                </div>
+                                {% for category in categories  %}
+                                <ul class="list-unstyled">
+                                    <li> <a href="{% url "get_category" category.name %}"><span>{{ category.name }}</span><em></em></a> </li>
+                                </ul>
+                                {% endfor %}
+                            </div>
+                            <div class="widget sidebar_widget widget_tag_cloud mt_60">
+                                <div class="widget_title">
+                                    <h3 class="f_p f_size_20 t_color3">Tags</h3>
+                                    <div class="border_bottom"></div>
+                                </div>
+                                <div class="post-tags">
+                                    <a href="/Postpage/{{ post.title }}">{{post.tags}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+{% endblock content %}

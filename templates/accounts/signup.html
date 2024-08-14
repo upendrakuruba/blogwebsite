@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+
+        <section class="breadcrumb_area">
+            <img class="breadcrumb_shap" src="img/banner_bg.png" alt="">
+            <div class="container">
+                <div class="breadcrumb_content text-center">
+                    <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">Sign Up</h1>
+                    <p class="f_400 w_color f_size_16 l_height26"></p>
+                </div>
+            </div>
+        </section>
+        <section class="sign_in_area bg_color sec_pad">
+            <div class="container">
+                <div class="sign_info">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <div class="sign_info_content">
+                                <h3 class="f_p f_600 f_size_24 t_color3 mb_40">Allready have an account?</h3>
+                                <h2 class="f_p f_400 f_size_30 mb-30">Login now and<br> starting Learing our <br><span class="f_700">Posts</span> </h2>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="login_info">
+                                <h2 class="f_p f_600 f_size_24 t_color3 mb_40">Sign Up</h2>
+                                {% include "message.html" %}
+        
+                                <form action="{% url "registration" %}" class="login-form sign-in-form" method='post' >{% csrf_token %}
+                                    <div class="form-group text_box">
+                                        <label class="f_p text_c f_400">First Name</label>
+                                        {{form.first_name}}
+                                        {% for error in form.first_name.errors %}
+                                        <span class="text-danger">{{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="form-group text_box">
+                                        <label class="f_p text_c f_400">Last Name</label>
+                                        {{form.last_name}}
+                                        {% for error in form.last_name.errors %}
+                                        <span class="text-danger">{{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="form-group text_box">
+                                        <label class="f_p text_c f_400">Email Address</label>
+                                        {{form.email}}
+                                        {% for error in form.email.errors %}
+                                        <span class="text-danger">{{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="form-group text_box">
+                                        <label class="f_p text_c f_400">Phone Number</label>
+                                        {{form.phone_nunber}}
+                                        {% for error in form.phone_nunber.errors %}
+                                        <span class="text-danger">{{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="form-group text_box">
+                                        <label class="f_p text_c f_400">Password</label>
+                                        {{form.password}}
+                                        {% for error in form.password.errors %}
+                                        <span class="text-danger">{{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="form-group text_box">
+                                        <label class="f_p text_c f_400">Confirm Password</label>
+                                        {{form.confirm_password}}
+                                        {% for error in form.non_field_errors %}
+                                        <span class="text-danger">{{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="extra mb_20">
+                                        <div class="checkbox remember">
+                                            <label>
+                                                <input type="checkbox"> I agree to terms and conditions of this website
+                                            </label>
+                                        </div>
+                                        <!--//check-box-->
+                                        <div class="forgotten-password">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button type="submit" class="btn_three">Sign Up </button>
+
+                                        <div class="social_text d-flex ">
+                                        </div>
+                                        
+                                    </div>
+                                    <br>
+                                    <label>Already Exiting User ?</label>
+                                    <a class="btn_three" href='{% url "login" %}'>Signin</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock content %}
