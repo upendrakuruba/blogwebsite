@@ -8,13 +8,16 @@ from django.contrib.auth import password_validation
 
 
 class RegistrationForm(forms.ModelForm):
+    
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder':'Enter Password',
         'class':'form-contrl',
     }))
+
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder':'Confirm Password'
     }))
+    
     class Meta:
         model = Account
         fields = ['first_name','last_name','phone_nunber','email','password']
